@@ -38,6 +38,11 @@ void vendor_load_properties()
 {
     char platform[PROP_VALUE_MAX];
     char model[PROP_VALUE_MAX];
+    char int_path[14] = { '\0' };
+    char dev_path[46] = { '\0' };
+    char ln_path[14] = { '\0' };
+    char devs[][4] = { "APP", "CAC", "LNX", "MSC", "UDA", "USP", "MDA", "SOS", "" };
+    int i = 0;
     int rc;
 
     rc = property_get("ro.board.platform", platform);
@@ -48,15 +53,30 @@ void vendor_load_properties()
     if (!strcmp(model, "foster_e")) { // check cpuinfo hardware identifier
         /* EMMC Model */
 	symlink("/etc/twrp.fstab.emmc", "/etc/twrp.fstab");
+	symlink("/dev/block/platform/sdhci-tegra.3/by-name/IMG", "/dev/block/BMP");
+	strcpy(int_path, "sdhci-tegra.3");
         property_set("ro.build.fingerprint", "nvidia/foster_e/t210:5.0./LRX21M/29979_515.3274:user/release-keys");
         property_set("ro.build.description", "foster_e-user 5.0 LRX21M 29979_515.3274 release-keys");
         property_set("ro.product.model", "foster_e");
     } else {
         /* SATA Model */
 	symlink("/etc/twrp.fstab.sata", "/etc/twrp.fstab");
+	symlink("/dev/block/platform/tegra-sata.0/by-name/BMP", "/dev/block/BMP");
+	strcpy(int_path, "tegra-sata.0");
         property_set("ro.build.fingerprint", "nvidia/foster_e_hdd/t210:5.0./LRX21M/29979_515.3274:user/release-keys");
         property_set("ro.build.description", "foster_e_hdd-user 5.0 LRX21M 29979_515.3274 release-keys");
         property_set("ro.product.model", "foster_e_hdd");
+    }
+
+    // Symlink paths for unified ROM installs.
+    for (i = 0; devs[i][0]; i++) {
+	strcpy(dev_path, "/dev/block/platform/");
+	strcat(dev_path, int_path);
+	strcat(dev_path, "/by-name/");
+	strcat(dev_path, devs[i]);
+	strcpy(ln_path, "/dev/block/");
+	strcat(ln_path, devs[i]);
+	symlink(dev_path, ln_path);
     }
 
     property_set("ro.product.device", "foster");
