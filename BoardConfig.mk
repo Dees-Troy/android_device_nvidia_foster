@@ -37,11 +37,9 @@ TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
 # Kernel
-# Open Source kernel boots aosp libs, but hangs on stock blobs.
-# Only the prebuilt stock kernel will boot the stock blobs.
 KERNEL_TOOLCHAIN_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_SOURCE := kernel/nvidia/foster
-TARGET_KERNEL_CONFIG := cyanogenmod_foster_defconfig
+TARGET_KERNEL_CONFIG := omni_recovery_foster_defconfig
 BOARD_KERNEL_IMAGE_NAME := Image
 
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -150,3 +148,10 @@ BOARD_SUPPRESS_EMMC_WIPE := true
 TARGET_UNIFIED_DEVICE := true
 TARGET_INIT_VENDOR_LIB := libinit_foster
 TARGET_LIBINIT_DEFINES_FILE := device/nvidia/foster/init/init_foster.c
+
+# TWRP
+TW_THEME := landscape_hdpi
+BOARD_HAS_NO_REAL_SDCARD := true
+RECOVERY_SDCARD_ON_DATA := true
+TW_NO_SCREEN_TIMEOUT := true
+TW_NO_SCREEN_BLANK := true

@@ -1,2 +1,2 @@
-add_lunch_combo cm_foster-eng
-add_lunch_combo cm_foster-userdebug
+add_lunch_combo omni_foster-eng
+add_lunch_combo omni_foster-userdebug

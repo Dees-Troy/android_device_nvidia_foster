@@ -45,6 +45,12 @@ type usercalib_block_device, dev_type;
 # Factory calibration partion(FCT) block device
 type factorycalib_block_device, dev_type;
 
+# Cache block device
+type cache_block_device, dev_type;
+
+# Userdata block device
+type userdata_block_device, dev_type;
+
 # /dev/cy8c-led-boot
 type cy8c_device, dev_type;
 
